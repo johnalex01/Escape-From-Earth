@@ -8,18 +8,25 @@ public enum MouseMoveDir
 
 public class PlayerMove : MonoBehaviour {
 
-
+    private Transform Prisioner;
 
     private Vector3 LastMouseDown=Vector3.zero;
 
     private MouseMoveDir dir = MouseMoveDir.NONE;
+
     public float moveSpeed = 100;
     public int CurLineIndex=1;
     public int TargetLineIndex = 1;
     public float SlideTime = 1.0f;
-
-    private float SlideTimer = 0;
     public bool isSlideing = false;
+    public bool isJump=false;
+    public bool isUp = false;
+    public float JumpSpeed = 50;
+
+    private float JumpHeight=15;
+    private float HaveJumpHeight = 0;
+    private float SlideTimer = 0;
+
     private envGenerate envGenerator;
     private float moveHorizantal=0;
     private float moveHorizantalSpeed = 6;
@@ -27,6 +34,7 @@ public class PlayerMove : MonoBehaviour {
     void Awake()
     {
         envGenerator = Camera.main.GetComponent<envGenerate>();
+        Prisioner = this.transform.Find("Prisoner").transform;
     }
 	// Use this for initialization
 	void Start () {
@@ -75,6 +83,35 @@ public class PlayerMove : MonoBehaviour {
                 isSlideing = false;
                 SlideTimer = 0;
             }
+        }
+
+        if (isJump)
+        {
+            float yMove =JumpSpeed* Time.deltaTime;
+            if (isUp)
+            {
+                Prisioner.position = new Vector3(Prisioner.position.x, Prisioner.position.y + yMove, Prisioner.position.z);
+                HaveJumpHeight += yMove;
+                if (Mathf.Abs (JumpHeight - HaveJumpHeight) < 0.5f)
+                {
+                    Prisioner.position = new Vector3(Prisioner.position.x, Prisioner.position.y + JumpHeight - HaveJumpHeight, Prisioner.position.z);
+                    isUp = false;
+                    HaveJumpHeight = JumpHeight;
+                }
+
+            }
+            else
+            {
+                Prisioner.position = new Vector3(Prisioner.position.x, Prisioner.position.y - yMove, Prisioner.position.z);
+                HaveJumpHeight -= yMove;
+                if (Mathf.Abs(HaveJumpHeight) < 0.5f)
+                {
+                    Prisioner.position = new Vector3(Prisioner.position.x, Prisioner.position.y - HaveJumpHeight, Prisioner.position.z);
+                    isJump = false;
+                    HaveJumpHeight = 0;
+                }
+            }
+
         }
     }
 
@@ -133,7 +170,13 @@ public class PlayerMove : MonoBehaviour {
                     }
                 else if (Mathf.Abs(TouchOffset.x) < Mathf.Abs(TouchOffset.y) && TouchOffset.y > 0)
                 {
-                        return MouseMoveDir.UP;
+                    if (isJump == false)
+                    {
+                        isJump = true;
+                        isUp = true;
+                        HaveJumpHeight = 0;
+                    }
+                    return MouseMoveDir.UP;
                 }
                 else{
                     isSlideing = true;

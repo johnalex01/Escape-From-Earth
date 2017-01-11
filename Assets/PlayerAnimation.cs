@@ -8,7 +8,8 @@ public class PlayerAnimation : MonoBehaviour {
         Run,
         TurnL,
         TurnR,
-        Silde
+        Silde,
+        Jump
     }
 
     private PlayerMove plaMove;
@@ -42,6 +43,8 @@ public class PlayerAnimation : MonoBehaviour {
                 anistate = AnimationState.TurnL;
             if (plaMove.isSlideing == true)
                 anistate = AnimationState.Silde;
+            if (plaMove.isJump == true)
+                anistate = AnimationState.Jump;
         }
 	}
     void LateUpdate()
@@ -64,7 +67,10 @@ public class PlayerAnimation : MonoBehaviour {
                 break;
             case AnimationState.Silde:
                 PlayAnimation("slide");
-                    break;
+                break;
+            case AnimationState.Jump:
+               PlayAnimation("jump");
+                break;
         }
 
     }
