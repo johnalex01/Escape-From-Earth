@@ -23,7 +23,7 @@ public class PlayerMove : MonoBehaviour {
     public bool isUp = false;
     public float JumpSpeed = 50;
 
-    private float JumpHeight=15;
+    private float JumpHeight=20;
     private float HaveJumpHeight = 0;
     private float SlideTimer = 0;
 

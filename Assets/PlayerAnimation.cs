@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum AnimationState
+{
+    Idle,
+    Run,
+    TurnL,
+    TurnR,
+    Silde,
+    Jump,
+    Death
+}
 public class PlayerAnimation : MonoBehaviour {
-    private enum AnimationState
-    {
-        Idle,
-        Run,
-        TurnL,
-        TurnR,
-        Silde,
-        Jump
-    }
+
 
     private PlayerMove plaMove;
+    private bool HavePlayDeath = false;
 
     private Animation animation;
-    private AnimationState anistate=AnimationState.Idle;
+    public AnimationState anistate=AnimationState.Idle;
 
     void Awake()
     {
@@ -46,6 +49,10 @@ public class PlayerAnimation : MonoBehaviour {
             if (plaMove.isJump == true)
                 anistate = AnimationState.Jump;
         }
+        else if (Gamecontroller.GameSta == GameState.End)
+        {
+            anistate = AnimationState.Death;
+        }
 	}
     void LateUpdate()
     {
@@ -71,6 +78,9 @@ public class PlayerAnimation : MonoBehaviour {
             case AnimationState.Jump:
                PlayAnimation("jump");
                 break;
+            case AnimationState.Death:
+                PlayDeath();
+                break;
         }
 
     }
@@ -90,5 +100,14 @@ public class PlayerAnimation : MonoBehaviour {
         {
             animation.Play(aniName);
         }
+    }
+
+    void PlayDeath()
+    {
+        if(HavePlayDeath==false&&!animation.IsPlaying("death")){
+            animation.Play("death");
+            HavePlayDeath=true;
+        }
+
     }
 }

@@ -45,11 +45,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BigCollider.cs" />
      <Compile Include="Assets\FollowPlayer.cs" />
      <Compile Include="Assets\Forest.cs" />
      <Compile Include="Assets\Gamecontroller.cs" />
      <Compile Include="Assets\PlayerAnimation.cs" />
      <Compile Include="Assets\PlayerMove.cs" />
+     <Compile Include="Assets\Small_Collider.cs" />
      <Compile Include="Assets\Tags.cs" />
      <Compile Include="Assets\envGenerate.cs" />
      <Compile Include="Assets\iTweenEditor\Examples\StartAndStopTween.cs" />
