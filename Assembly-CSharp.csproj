@@ -51,6 +51,8 @@
      <Compile Include="Assets\Gamecontroller.cs" />
      <Compile Include="Assets\PlayerAnimation.cs" />
      <Compile Include="Assets\PlayerMove.cs" />
+     <Compile Include="Assets\PloiceCar.cs" />
+     <Compile Include="Assets\Rotate.cs" />
      <Compile Include="Assets\Small_Collider.cs" />
      <Compile Include="Assets\Tags.cs" />
      <Compile Include="Assets\envGenerate.cs" />
